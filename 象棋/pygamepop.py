@@ -59,6 +59,29 @@ QuitButtom = bottom( (color_goldenrod), 50, 500, 100, 50, 'Quit')
 pygame.display.update()
 
 
+#draw the cross line
+def shizi(a,b):
+        l = 12
+        d = [5,-5]
+        for c in [0,1]:
+                if a == 275:
+                        c = 0
+                elif a == 875:
+                        c = 1
+                for e in [0,1]:
+                        p = [a+d[c],b+d[e]]
+                        if e == 0:
+                                pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0],p[1]+l))
+                        else:
+                                pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0],p[1]-l))
+                        if c == 0:
+                                pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0]+l,p[1]))
+                        else:
+                                pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0]-l,p[1]))
+        
+        
+        return
+
 while True:
 
         #Get mouse position
@@ -95,6 +118,17 @@ while True:
 
         #draw line between board and bottoms
         pygame.draw.line(screen ,color_white ,(200,0) ,(200,825), 2)
+        
+        #draw cross lines
+        shizi(350,225)
+        shizi(800,225)
+        shizi(350,600)
+        shizi(800,600)
+        dd = 275
+        while dd >= 275 and dd <= 875:
+                shizi(dd,300)
+                shizi(dd,525)
+                dd += 150
         
         #draw chess board
         i=75
