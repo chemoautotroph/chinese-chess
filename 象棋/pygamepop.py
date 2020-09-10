@@ -9,7 +9,7 @@ width = 950
 height = 825
 screen = pygame.display.set_mode((width,height))
 pygame.display.set_caption("chinese chess")
-pick = False
+
 
 clock = pygame.time.Clock()
 background_image=pygame.image.load("background.jpg").convert()
@@ -22,16 +22,7 @@ color_red=(255,0,0)
 color_blue=(0, 0, 255)
 color_navy=(97, 218, 252)
 
-#get all the points corrdinate
-all_corrdinate=[]
-j=0
-for  i in range (1,10):
-        for j in range (1,11):
-                a=[i*75+200, j*75]
-                all_corrdinate.append(a)
-
-
-#define bottom class
+#define bottoms at left
 class  bottom():
         def __init__(self, color, x, y, width, height, text=""):
                 self.color=color
@@ -45,11 +36,11 @@ class  bottom():
                  #Call this method to draw the button on the screen
                 if outline:
                         pygame.draw.rect(screen, outline, (self.x-2,self.y-2,self.width+4,self.height+4),0)
-        
+            
                         pygame.draw.rect(screen, self.color, (self.x,self.y,self.width,self.height),0)
         
                 if self.text != '':
-                        font = pygame.font.SysFont('Cyberbit.ttf', 25)
+                        font = pygame.font.SysFont('comicsans', 25)
                         text = font.render(self.text, 1, (0,0,0))
                         screen.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
 
@@ -60,81 +51,13 @@ class  bottom():
                                 return True
                 return False
 
-#define buttoms       
+        
 NewGameButtom = bottom ( (color_goldenrod), 50, 200, 100, 50, 'New Game')
 WithdrawButtom = bottom ( (color_goldenrod), 50, 350, 100, 50, 'Withdraw')
 QuitButtom = bottom( (color_goldenrod), 50, 500, 100, 50, 'Quit')
+
 pygame.display.update()
 
-#define rules
-class rules():
-        def __init__(self, move_color, name_coordinates,user_mouse_pos):
-                self.move_color=move_color
-                self.name_coordinates=name_coordinates
-                self.user_mouse_input=user_mouse_input
-        
-        #define 
-        # move_color=1 black should go; 
-        # move_color=0 red should go;
-        def rule_move(self, move_color, name_coordinates, user_mouse_pos):
-                for i in name_coordinates:
-                        if i[1] == user_mouse_pos:
-                                name = i[0]
-                                x=name_coordinates[i][1][0]
-                                y=name_coordinates[i][1][1]
-
-                        #determine who goes first
-                        if move_color == 0:
-
-                                #determine role 
-                                if name == 'bing_qizi':
-
-
-                                        """
-                                        #cross river?
-                                        if y>375:
-
-                                                #pygame.draw.circle(screen, color_blue, [x,y+75], 5)
-
-
-                                        elif x == 275:
-                                                #pygame.draw.circle(screen, color_blue, [x+75, y], 5)
-                                                #pygame.draw.circle(screen, color_blue, [x, y+75], 5)
-
-                                        elif x == 875:
-                                                #pygame.draw.circle(screen, color_blue, [x-75, y], 5)
-                                                #pygame.draw.circle(screen, color_blue, [x, y+75], 5)
-                                        
-                                        elif y == 75:
-                                                #pygame.draw.circle(screen, color_blue, [x+75, y], 5)
-                                                #pygame.draw.circle(screen, color_blue, [x-75, y], 5)
-                                                
-                                        else: 
-                                                #pygame.draw.circle(screen, color_blue, [x+75, y], 5)
-                                                #pygame.draw.circle(screen, color_blue, [x-75, y], 5)
-                                                #pygame.draw.circle(screen, color_blue, [x, y+75], 5)
-                                                
-
-
-
-                                #if name == pao_qizi:
-
-                                #if name == che_qizi:
-
-                                #if name == xiang_qizi:
-                                
-                                #if name == shi_qizi:
-
-                                #if name == ma_qizi:
-
-                                #if name == jiang_qizi:
-                                                return
-        def draw()"""
-
-                                
-
-
-                        
 
 #draw the cross line
 def shizi(a,b):
@@ -155,7 +78,8 @@ def shizi(a,b):
                                 pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0]+l,p[1]))
                         else:
                                 pygame.draw.line(screen,color_black,(p[0],p[1]),(p[0]-l,p[1]))
-
+        
+        
         return
 
 while True:
@@ -173,15 +97,8 @@ while True:
                         
                 #mouse button down?
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                        if pick == True and ChessButtom.isOver(mouse_position):
-                                pick = False
-
-                        elif pick == False :
-                                pick = True
-                                
-
                         if NewGameButtom.isOver(mouse_position):
-                                print('Newgame')
+                                print("new game")
                         if WithdrawButtom.isOver(mouse_position):
                                 print("withdraw")
                         if QuitButtom.isOver(mouse_position):
@@ -214,13 +131,11 @@ while True:
                 dd += 150
         
         #draw chess board
-        #horizontal line
         i=75
         while i <= 750:
                pygame.draw.line(screen, color_black, (275,i), (875,i) )
                i+=75
                
-        #vertical line
         j=350
         while j <= 875:
                 pygame.draw.line(screen, color_black, (j,75), (j,375))
